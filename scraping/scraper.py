@@ -104,14 +104,11 @@ def get_lcsp(zip_code_to_search, age_to_search, driver):
         driver = get_driver()
         updated_lcsp = get_lcsp(zip_code_to_search, age_to_search, driver)
         return updated_lcsp
-    # driver.close()
 
     print("LCSP: " + lcsp)
     Utils.print_line_separator()
 
-    # driver.refresh()
     body_element = driver.find_element(By.TAG_NAME, "body")
-    # delete the element
     driver.execute_script(
         """ var element = arguments[0]; element.parentNode.removeChild(element); """
         , body_element)
@@ -232,4 +229,4 @@ def specify_lcsp_for_all_employees_with_current_zip_and_age(employees, lcsp_map,
         employee_age = Utils.get_age(employee.dob, tax_year)
         if (employee_zip == zip_code and employee_age == zip_code_age.zip_age and
                 (employee.lcsp is None or employee.lcsp == "")):
-            employee.lcsp = lcsp_map[zip_code]
+            employee.lcsp = lcsp_map[zip_code].replace(",", "")
