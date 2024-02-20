@@ -49,12 +49,15 @@ def get_employee_map_from_file(file_path, zip_to_use):
         elif missing_dob and missing_zip:
             print("Date of birth and zip are missing for employee with SSN: " + row[2].value)
 
-        employee = EmployeeICHRAInfo(row[2].value,
-                                     row[22].value,
-                                     row[27].value,
-                                     row[31].value,
-                                     row[34].value,
-                                     row[38].value)
+        ssn = row[2].value
+        dob = row[22].value
+        home_zip = row[27].value
+        work_zip = row[31].value
+        salary = row[34].value
+        lcsp = row[38].value
+        lcsp = None if lcsp == "" else lcsp
+
+        employee = EmployeeICHRAInfo(ssn, dob, home_zip, work_zip, salary, lcsp)
 
         employees[employee.ssn] = employee
     return employees
