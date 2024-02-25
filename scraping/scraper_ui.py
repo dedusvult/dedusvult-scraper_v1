@@ -56,8 +56,8 @@ class ScraperUI:
         default_font = ('Helvetica', 10)
 
         # Main window's starting position (centered)
-        window_width = 350
-        window_height = 200
+        window_width = 400
+        window_height = 250
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
         x_cordinate = int((screen_width / 2) - (window_width / 2))
