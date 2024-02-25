@@ -159,7 +159,7 @@ class ScraperUI:
             self.selected_process_group = self.process_group_var.get()
 
             # Create and configure the scraper
-            scraper = WebScraper(self.selected_file_path, self.selected_zip_code, self.selected_tax_year)
+            scraper = WebScraper(self.selected_file_path, self.selected_zip_code, self.selected_tax_year, self.selected_process_group)
 
             # Create output window and redirect output
             self.show_output_window()

@@ -27,10 +27,11 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class WebScraper:
-    def __init__(self, input_file, zip_to_use, tax_year):
+    def __init__(self, input_file, zip_to_use, tax_year, process_group):
         self.input_file = input_file
         self.zip_to_use = zip_to_use
         self.tax_year = tax_year
+        self.process_group = process_group
         self.driver = get_driver()
 
     def run(self):
@@ -43,8 +44,9 @@ class WebScraper:
             print("Employees to process: " + str(len(employees)))
             Utils.print_line_separator()
 
-            all_ages_in_the_employee_map_for_zips = get_all_age_zip_combinations(employees, self.zip_to_use,
-                                                                                 self.tax_year)
+            all_ages_in_the_employee_map_for_zips = get_all_age_zip_combinations_to_process(employees, self.zip_to_use,
+                                                                                            self.tax_year,
+                                                                                            self.process_group)
 
             age_zip_combinations_to_process = get_age_zip_combinations_number_to_process(
                 all_ages_in_the_employee_map_for_zips)
@@ -142,11 +144,16 @@ def is_employee_record_invalid(employee, zip_to_use):
     return flag
 
 
-def get_all_age_zip_combinations(employees, zip_to_use, tax_year):
+def get_all_age_zip_combinations_to_process(employees, zip_to_use, tax_year, process_group):
     all_ages_in_the_employee_map_for_zips = set()
     for employee in employees.values():
         if is_employee_record_invalid(employee, zip_to_use):
             continue
+
+        if process_group == "FT and no status employees":
+            # continue of employee status is not FT ot none or not empty/blank
+            if employee.aca_status != "FT" and employee.aca_status is not None and employee.aca_status != "":
+                continue
 
         # if all_ages_in_the_employee_map_for_zips contains the ZipCodeAge object with the same zip_code and zip_age,
         # and it has a lcsp value, then skip the current iteration
