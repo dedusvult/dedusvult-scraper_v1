@@ -39,12 +39,14 @@ class ScraperUI:
         self.confirm_button = None
         self.selected_zip_code = None
         self.selected_file_path = None
+        self.selected_process_group = None
         self.root = tk.Tk()
         self.root.title("Scraper UI")
         self.root.geometry("350x200")  # Adjust the size as needed
 
         self.file_path_var = tk.StringVar()
         self.zip_code_var = tk.StringVar()
+        self.process_group_var = tk.StringVar()
         self.tax_year_var = tk.StringVar(value=str(global_vars.tax_year))  # Directly use the variable
 
         self.setup_ui()
@@ -71,6 +73,7 @@ class ScraperUI:
 
         self.file_selection_frame_setup(default_font)
         self.zip_code_frame_setup()
+        self.process_group_frame_setup()
         self.tax_year_frame_setup()
         self.confirm_button_frame_setup()
 
@@ -113,6 +116,21 @@ class ScraperUI:
         right_spacer_zip = ttk.Frame(zip_frame)
         right_spacer_zip.pack(side='left', expand=True)
 
+    def process_group_frame_setup(self):
+        # Process group selection frame
+        process_group_frame = ttk.Frame(self.root, padding="10")
+        process_group_frame.pack(fill='x', expand=True)
+        # Spacers for centering the process group dropdown
+        left_spacer_zip = ttk.Frame(process_group_frame)
+        left_spacer_zip.pack(side='left', expand=True)
+        ttk.Label(process_group_frame, text="Process group:").pack(side='left')
+        process_group_options = ["All employees", "FT and no status employees"]
+        process_group_dropdown = ttk.OptionMenu(process_group_frame, self.process_group_var, process_group_options[0],
+                                                *process_group_options)
+        process_group_dropdown.pack(side='left')
+        right_spacer_zip = ttk.Frame(process_group_frame)
+        right_spacer_zip.pack(side='left', expand=True)
+
     def file_selection_frame_setup(self, default_font):
         # File selection frame
         file_frame = ttk.Frame(self.root, padding="10")
@@ -138,6 +156,7 @@ class ScraperUI:
             self.selected_file_path = file_path
             self.selected_zip_code = self.zip_code_var.get()
             self.selected_tax_year = self.tax_year_var.get()
+            self.selected_process_group = self.process_group_var.get()
 
             # Create and configure the scraper
             scraper = WebScraper(self.selected_file_path, self.selected_zip_code, self.selected_tax_year)
