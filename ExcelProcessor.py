@@ -2,7 +2,6 @@
 
 import openpyxl
 import Utils
-from openpyxl.styles import Font, Fill, Border, Alignment
 from copy import copy
 from employee_ichra_dto import EmployeeICHRAInfo
 

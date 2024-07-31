@@ -1,4 +1,3 @@
-import subprocess
 import sys
 from package_installer import PackageInstaller
 

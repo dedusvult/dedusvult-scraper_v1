@@ -4,16 +4,11 @@
 # pip install pandas
 from package_installer import PackageInstaller
 
-import json
 import time
-import re
-import requests
 import ExcelProcessor
 import global_vars
 import Utils
 
-from bs4 import BeautifulSoup
-from datetime import datetime
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
